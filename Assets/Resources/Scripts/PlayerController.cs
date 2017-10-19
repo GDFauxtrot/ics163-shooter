@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour {
         chargeFiringSource = sources[1];
         secondFiringSource = sources[2];
 
-        chargeOutlineChild = transform.FindChild("ChargeOutline").gameObject;
+        chargeOutlineChild = transform.Find("ChargeOutline").gameObject;
         chargeOutlineChild.GetComponent<SpriteRenderer>().enabled = false;
 	}
 	
