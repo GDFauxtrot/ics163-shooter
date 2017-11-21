@@ -1,13 +1,16 @@
 fileFormatVersion: 2
-guid: 06efda47ec3b3be408cdd77d2e69d776
-timeCreated: 1508227531
+guid: 099041b5cce9ba2428694c6b33de2722
+timeCreated: 1511134323
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: PlayerChargeShotHi_0
-    21300002: PlayerChargeShotHi_1
-    21300004: PlayerChargeShotHi_2
-    21300006: PlayerChargeShotHi_3
+    21300000: planets_0
+    21300002: planets_1
+    21300004: planets_2
+    21300006: planets_3
+    21300008: planets_4
+    21300010: planets_5
+    21300012: planets_6
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -50,7 +53,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 40
+  spritePixelsToUnits: 150
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -100,57 +103,99 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PlayerChargeShotHi_0
+      name: planets_0
       rect:
         serializedVersion: 2
-        x: 8
-        y: 0
-        width: 79
-        height: 112
+        x: 32
+        y: 16
+        width: 128
+        height: 128
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PlayerChargeShotHi_1
+      name: planets_1
       rect:
         serializedVersion: 2
-        x: 95
-        y: 0
-        width: 80
-        height: 112
+        x: 224
+        y: 16
+        width: 128
+        height: 128
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PlayerChargeShotHi_2
+      name: planets_2
       rect:
         serializedVersion: 2
-        x: 183
-        y: 0
-        width: 80
-        height: 112
+        x: 402
+        y: 8
+        width: 156
+        height: 144
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PlayerChargeShotHi_3
+      name: planets_3
       rect:
         serializedVersion: 2
-        x: 271
-        y: 0
-        width: 81
-        height: 112
+        x: 593
+        y: 16
+        width: 128
+        height: 128
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: planets_4
+      rect:
+        serializedVersion: 2
+        x: 753
+        y: 16
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: planets_5
+      rect:
+        serializedVersion: 2
+        x: 913
+        y: 32
+        width: 200
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: planets_6
+      rect:
+        serializedVersion: 2
+        x: 1161
+        y: 32
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

@@ -1,0 +1,67 @@
+========
+Common Aspect Ratios (https://v-play.net/doc/vplay-different-screen-sizes/)
+========
+
+4:3
+	1024x768 - iPad 1, iPad 2
+	2048x1536 - iPad 3
+3:2
+	480x320 - iPhone 3GS and lower, Android devices
+	960x640 - iPhone 4, iPhone 4S
+16:10
+	800x480 - Android devices, Windows Phone 7
+	1280x800 - Android tablets like Google Nexus 7, Samsung Galaxy Tab 10.1
+17:10
+	1024x600 - Android tablets like Samsung Galaxy Tab 7
+16:9
+	640x360 - Symbian3 devices like Nokia C7
+	854x480 - Android devices
+	1136x640 - iPhone 5
+	1280x720 - HTC One Mini, Samsung Galaxy S3
+	1334x750 - iPhone 6/6S, iPhone 7/7S
+	1920x1080 - iPhone 6/7 Plus, Google Nexus 5, Samsung Galaxy S5
+	2560x1440 - Samsung Galaxy S7
+
+========
+More Resolutions (http://mediag.com/news/popular-screen-resolutions-designing-for-all/)
+Sorted for YOUR convenience!
+========
+
+- iOS Phones & Tablets -
+
+ 640x1136 (40:71)	iPhone 5/5S/5C
+ 640x1136 (40:71)	iPod Touch
+ 750x1334 (375:667)	iPhone 6/6S
+ 750x1334 (375:667)	iPhone 7
+ 750x1334 (375:667)	iPhone 8
+1080x1920 (9:16)	iPhone 6 Plus/6S Plus
+1080x1920 (9:16)	iPhone 7 Plus
+1080x1920 (9:16)	iPhone 8 Plus
+1125x2436 (375:812)	iPhone X
+
+ 768x1024 (3:4) 	iPad Mini
+1536x2048 (3:4) 	iPad Mini 2 & 3
+1536x2048 (3:4) 	iPad 3rd & 4th Generation
+1536x2048 (3:4) 	iPad Air 1 & 2
+2048x2732 (512:683)	iPad Pro
+
+- Android Phones & Tablets -
+
+1080x1920 (9:16)	Google Pixel
+1080x1920 (9:16)	Google Pixel 2
+1080x1920 (9:16)	One Plus 3
+1080x1920 (9:16)	Nexus 5X
+1440x2560 (9:16)	Nexus 6P
+1440x2560 (9:16)	LG G5
+1440x2560 (9:16)	Google Pixel XL
+1440x2560 (9:16)	Google Pixel 2 XL
+1440x2560 (9:16)	Samsung Galaxy Note 5
+1440x2560 (9:16)	Samsung Galaxy S7
+1440x2560 (9:16)	Samsung Galaxy S7 Edge
+1440x2960 (18:37)	Samsung Galaxy S8
+1440x2960 (18:37)	Samsung Galaxy S8+
+
+ 800x1280 (5:8) 	Samsung Galaxy Tab 10
+1200x1920 (5:8) 	Nexus 7 (2013)
+1536x2048 (3:4) 	Nexus 9
+2560x1700 (128:85)	Chromebook Pixel
