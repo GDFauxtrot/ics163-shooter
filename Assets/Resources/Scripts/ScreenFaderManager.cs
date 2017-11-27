@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class ScreenFaderManager : MonoBehaviour {
 
-    private bool isFirstOfItsKind;
     private Coroutine currentFade;
     private GameObject fadeObject;
 
@@ -14,14 +13,10 @@ public class ScreenFaderManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
 
         foreach (GameObject other in FindObjectsOfType(typeof(GameObject))) {
-            if (other.name == "ScreenFader") {
-                if (other != gameObject && !isFirstOfItsKind) {
-                    Destroy(gameObject);
-                }
+            if (other.name == "ScreenFader" && other != gameObject) {
+                Destroy(gameObject);
             }
         }
-        
-        isFirstOfItsKind = true;
     }
 
     void OnEnable() {

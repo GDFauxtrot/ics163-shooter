@@ -8,6 +8,7 @@ public class BGScroller : MonoBehaviour {
 
     List<GameObject> children;
     float heightToUnits;
+
 	void Start () {
         children = new List<GameObject>();
         heightToUnits = chosenSprite.rect.height / chosenSprite.pixelsPerUnit;

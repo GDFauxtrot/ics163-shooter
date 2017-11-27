@@ -61,7 +61,7 @@ public class PlayerControllerAI : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        sinOffset = Mathf.Sin(Mathf.Deg2Rad * ySinMovementDegree)/12f;
+        sinOffset = Mathf.Sin(Mathf.Deg2Rad * ySinMovementDegree)/16f;
         ySinMovementDegree += 3;
         if (ySinMovementDegree == 360)
             ySinMovementDegree = 0;
@@ -71,9 +71,9 @@ public class PlayerControllerAI : MonoBehaviour {
         float xDif = transform.position.x - lastX;
         if (xDif < -0.01) {
             GetComponent<SpriteRenderer>().sprite = moveSprites[0];
-        } else if (xDif < -0.002) {
+        } else if (xDif < -0.0015) {
             GetComponent<SpriteRenderer>().sprite = moveSprites[1];
-        } else if (xDif < 0.002) {
+        } else if (xDif < 0.0015) {
             GetComponent<SpriteRenderer>().sprite = moveSprites[2];
         } else if (xDif < 0.01) {
             GetComponent<SpriteRenderer>().sprite = moveSprites[3];
@@ -98,6 +98,7 @@ public class PlayerControllerAI : MonoBehaviour {
                     yield return new WaitForSeconds(Random.Range(1f, 2f));
                 } else {
                     beingSilly = true;
+                    inputSmoothness = 0.01f;
                 }
             }
             // not an 'else' - want to execute right after it becomes true
@@ -107,6 +108,7 @@ public class PlayerControllerAI : MonoBehaviour {
                 if (sillyChoice < 3) {
                     // 20% chance return to position
                     beingSilly = false;
+                    inputSmoothness = 0.015f;
                     desiredPosition = onScreenPosition;
                 } else {
                     if (desiredPosition.x == onScreenPosition.x) {
@@ -117,9 +119,9 @@ public class PlayerControllerAI : MonoBehaviour {
                         desiredPosition = new Vector2(onScreenPosition.x + Random.Range(-horizFloatAmount, 0f), onScreenPosition.y);
                     }
                     if (Random.Range(0f, 1f) < 0.75f) {
-                        yield return new WaitForSeconds(Random.Range(1f, 3f));
+                        yield return new WaitForSeconds(Random.Range(1.5f, 2f));
                     } else {
-                        yield return new WaitForSeconds(Random.Range(3f, 5f));
+                        yield return new WaitForSeconds(Random.Range(2f, 2.5f));
                     }
                 }
             }
