@@ -7,8 +7,6 @@ public class Enemy : MonoBehaviour {
     public enum EnemyType{NORMAL, DASH, ARTILLERY};
 
     public int health = 10;
-    public GameObject projectile;
-    // TODO: Add comment for type list to appear in the designer
     public EnemyType enemytype; // Select enum from above in designer
 
     // Animations
@@ -36,7 +34,7 @@ public class Enemy : MonoBehaviour {
         if (bullet)
         {
             health -= bullet.GetDamage();
-            bullet.Hit();
+            //bullet.Hit();
         }
         if (health <= 0)
         {
