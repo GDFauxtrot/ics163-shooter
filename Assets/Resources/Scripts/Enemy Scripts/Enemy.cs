@@ -11,12 +11,15 @@ public class Enemy : MonoBehaviour {
     // TODO: Add comment for type list to appear in the designer
     public EnemyType enemytype; // Select enum from above in designer
 
+    // Animations
+    Animator animator;
+
     // Add sprite transfomr array?
 
 
 	// Use this for initialization
 	void Start () {
-		
+        animator = this.GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -33,10 +36,13 @@ public class Enemy : MonoBehaviour {
         if (bullet)
         {
             health -= bullet.GetDamage();
+            bullet.Hit();
         }
         if (health <= 0)
         {
             Destroy(this.gameObject);
         }
     }
+
+
 }
