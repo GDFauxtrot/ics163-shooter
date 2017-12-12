@@ -17,4 +17,9 @@ public class Bullet : MonoBehaviour {
 	void FixedUpdate () {
         transform.position = new Vector3(transform.position.x, transform.position.y + speed, transform.position.z);
 	}
+
+    public int GetDamage()
+    {
+        return damage;
+    }
 }
