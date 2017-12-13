@@ -36,12 +36,26 @@ public class Enemy : MonoBehaviour {
         {
             health -= bullet.GetDamage();
             //bullet.Hit();
+            if (health <= 0)
+            {
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                WhenHit();
+            }
         }
-        if (health <= 0)
-        {
-            Destroy(this.gameObject);
-        }
+        
     }
 
+    void WhenHit()
+    {
+        animator.SetTrigger("Hit");
+    }
+
+    void Reset()
+    {
+        animator.SetTrigger("Reset");
+    }
 
 }
