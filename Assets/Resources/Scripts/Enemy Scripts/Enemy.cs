@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         animator = this.GetComponent<Animator>();
+        animator.Play("Arrival");
 	}
 	
 	// Update is called once per frame

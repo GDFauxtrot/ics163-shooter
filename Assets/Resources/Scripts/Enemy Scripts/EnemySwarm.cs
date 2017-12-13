@@ -25,7 +25,7 @@ public class EnemySwarm : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        SpawnAll();
+        SpawnUntilFull();
 	}
 	
 	// Update is called once per frame
