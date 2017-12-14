@@ -32,6 +32,10 @@ public class PlayerController : MonoBehaviour {
 
     float lastX; // Used for changing player sprite when moving horizontally
 
+    public bool tutorialDisableMove;
+    public bool tutorialDisableShoot;
+    public bool tutorialDisableChargeShot;
+
 	void Start () {
         bulletPool = GameObject.Find("BulletPool");
 
@@ -51,7 +55,10 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	void Update () {
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mousePos = Vector2.zero;
+
+        if (!tutorialDisableMove)
+            mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         // a hint of lerp to make movement feel less flat
         transform.position = new Vector3(
@@ -59,12 +66,12 @@ public class PlayerController : MonoBehaviour {
             Mathf.Lerp(transform.position.y, mousePos.y + pushbackOffset.y, inputSmoothness),
             transform.position.z);
 
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0) && !tutorialDisableShoot) {
             if (firingCoroutine == null) {
                 firingCoroutine = StartCoroutine(FiringCoroutine());
             }
         }
-        if (Input.GetMouseButton(1)) {
+        if (Input.GetMouseButton(1) && !tutorialDisableChargeShot) {
             if (chargingCoroutine == null) {
                 chargingCoroutine = StartCoroutine(ChargeFiringCoroutine());
             }

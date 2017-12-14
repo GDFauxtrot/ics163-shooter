@@ -28,7 +28,7 @@ public class BGScroller : MonoBehaviour {
 	    if (transform.position.y < heightToUnits*-2) {
             transform.position = new Vector3(transform.position.x, transform.position.y + heightToUnits * 2, transform.position.z);
         } else {
-            transform.position = new Vector3(transform.position.x, transform.position.y - 0.05f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, transform.position.y - 0.07f, transform.position.z);
         }
 	}
 }

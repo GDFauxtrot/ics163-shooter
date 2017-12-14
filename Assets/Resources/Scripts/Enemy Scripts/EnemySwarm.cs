@@ -10,7 +10,6 @@ public class EnemySwarm : MonoBehaviour {
      *      Notifiying when the wave is destroyed / finished
      */
 
-
     public float formation_width, formation_height;
     public GameObject enemy_prefab;
     public float minX;
@@ -33,7 +32,6 @@ public class EnemySwarm : MonoBehaviour {
         MoveFormationSideToSide();
         if (AllMembersDead())
         {
-            Debug.Log("Empty Formation");
             SpawnUntilFull();
         }
     }

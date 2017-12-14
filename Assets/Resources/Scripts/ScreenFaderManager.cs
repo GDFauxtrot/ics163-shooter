@@ -33,6 +33,10 @@ public class ScreenFaderManager : MonoBehaviour {
         if (scene.name == "GalaxyViewMenu" || scene.name == "UpgradeMenu") {
             FadeFrom(Color.black, 0.75f);
         }
+
+        if (scene.name == "TutorialStage") {
+            FadeFrom(Color.black, 1.5f);
+        }
     }
 
     private void CreateFadeObject() {
