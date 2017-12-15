@@ -22,17 +22,34 @@ public class EnemySwarm : MonoBehaviour {
     public float spawn_delay = 0.2f;
 
 
+    // Bools for checking if attack can be called
+    private bool is_filling = true;
+    private bool is_attacking = false;
+
+
     // Use this for initialization
     void Start () {
+        is_filling = true;
         SpawnUntilFull();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        MoveFormationSideToSide();
+        if (!is_attacking)
+        {
+            MoveFormationSideToSide();
+        }
         if (AllMembersDead())
         {
             SpawnUntilFull();
+        }
+
+        Debug.Log("fill: " + is_filling + "; attack: " + is_attacking);
+
+        if ((Random.Range(1f, 1000000f) > 999000) && CanAttack()) // Arbitrary for the time being
+        {
+            Debug.Log("In Range");
+            AttackSwarm(1);
         }
     }
 
@@ -58,6 +75,7 @@ public class EnemySwarm : MonoBehaviour {
                                             Quaternion.identity) as GameObject;
             enemy.transform.parent = child;
         }
+        is_filling = false;
     }
 
     void MoveFormationSideToSide()
@@ -132,6 +150,38 @@ public class EnemySwarm : MonoBehaviour {
         {
             Invoke("SpawnUntilFull", spawn_delay);
         }
+        Invoke("_resetis_fillingOnDelay", 10);
     }
 
+    void AttackSwarm(int pattern)
+    {
+        float offset_incrementer = 0;
+        foreach (Transform enemy_position in this.transform)
+        {
+            if (enemy_position.childCount > 0)
+            {
+                GameObject enemy = enemy_position.GetChild(0).gameObject;
+                Enemy enemy_script = enemy.GetComponent<Enemy>();
+                enemy_script.Attack(pattern, offset_incrementer);
+                offset_incrementer += 0.5f;
+                Debug.Log("offset = " + offset_incrementer);
+            }
+        }
+    }
+    
+    bool CanAttack()
+    {
+        if (!is_filling && !is_attacking)
+        {
+            is_attacking = true;
+            return true;
+        }
+        return false;
+    }
+
+
+    void _resetis_fillingOnDelay()
+    {
+        is_filling = false;
+    }
 }

@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour {
 
     // -- Private -- //
 
-    Sprite[] moveSprites;
+    // Sprite[] moveSprites;
     Coroutine firingCoroutine, chargingCoroutine;
     AudioSource mainFiringSource, chargeFiringSource, secondFiringSource;
 
@@ -36,12 +36,15 @@ public class PlayerController : MonoBehaviour {
     public bool tutorialDisableShoot;
     public bool tutorialDisableChargeShot;
 
+    public Sprite shipSprite;
+
 	void Start () {
         bulletPool = GameObject.Find("BulletPool");
 
         // LoadAll() handles tile sets
-        moveSprites = Resources.LoadAll<Sprite>("Sprites/tyrianship/ship");
-        GetComponent<SpriteRenderer>().sprite = moveSprites[2];
+        // moveSprites = Resources.LoadAll<Sprite>("Sprites/tyrianship/ship");
+        // GetComponent<SpriteRenderer>().sprite = moveSprites[2];
+        GetComponent<SpriteRenderer>().sprite = shipSprite;
         lastX = transform.position.x;
 
         // Audio source components added to player in the same order
@@ -60,6 +63,12 @@ public class PlayerController : MonoBehaviour {
         if (!tutorialDisableMove)
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
+        if (mousePos.x < -Camera.main.orthographicSize/2) {
+            mousePos = new Vector2(-Camera.main.orthographicSize / 2, mousePos.y);
+        }
+        if (mousePos.x > Camera.main.orthographicSize / 2) {
+            mousePos = new Vector2(Camera.main.orthographicSize / 2, mousePos.y);
+        }
         // a hint of lerp to make movement feel less flat
         transform.position = new Vector3(
             Mathf.Lerp(transform.position.x, mousePos.x + pushbackOffset.x, inputSmoothness),
@@ -87,19 +96,19 @@ public class PlayerController : MonoBehaviour {
 
     void LateUpdate() {
         // Change sprite based on movement
-        float xDif = transform.position.x - lastX;
-        if (xDif < -0.2) {
-            GetComponent<SpriteRenderer>().sprite = moveSprites[0];
-        } else if (xDif < -0.05) {
-            GetComponent<SpriteRenderer>().sprite = moveSprites[1];
-        } else if (xDif < 0.05) {
-            GetComponent<SpriteRenderer>().sprite = moveSprites[2];
-        } else if (xDif < 0.2) {
-            GetComponent<SpriteRenderer>().sprite = moveSprites[3];
-        } else {
-            GetComponent<SpriteRenderer>().sprite = moveSprites[4];
-        }
-        lastX = transform.position.x;
+        //float xDif = transform.position.x - lastX;
+        //if (xDif < -0.2) {
+        //    GetComponent<SpriteRenderer>().sprite = moveSprites[0];
+        //} else if (xDif < -0.05) {
+        //    GetComponent<SpriteRenderer>().sprite = moveSprites[1];
+        //} else if (xDif < 0.05) {
+        //    GetComponent<SpriteRenderer>().sprite = moveSprites[2];
+        //} else if (xDif < 0.2) {
+        //    GetComponent<SpriteRenderer>().sprite = moveSprites[3];
+        //} else {
+        //    GetComponent<SpriteRenderer>().sprite = moveSprites[4];
+        //}
+        //lastX = transform.position.x;
 
         // Handle charge outline child behavior (hackey, since the other half is in ChargeFiringCoroutine())
         if (Input.GetMouseButton(1)) {
@@ -178,6 +187,7 @@ public class PlayerController : MonoBehaviour {
 
         chargingCoroutine = null;
     }
+
     private IEnumerator FiringCoroutine() {
         bool held = false; // to play a modified audio clip after the first shot, so it loops better
         do {

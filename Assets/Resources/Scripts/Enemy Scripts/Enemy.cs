@@ -73,4 +73,26 @@ public class Enemy : MonoBehaviour {
         animator.SetTrigger("Reset");
     }
 
+    public void Attack(int pattern, float offset)
+    {
+        Debug.Log(this + " is attacking");
+        animator.SetInteger("Attack Pattern", pattern);
+        Invoke("AttackInvoke", 1 + offset);
+    }
+
+    void AttackInvoke()
+    {
+        animator.SetTrigger("Attack Trigger");
+        animator.SetTrigger("Attack Reset");
+        Invoke("Disappear", 2);
+    }
+
+    // Destroy enemy without dropping scrap / powerups
+    // For use at end of an attack run / wave
+    public void Disappear()
+    {
+        Debug.Log("Destroying " + this);
+        Destroy(this.gameObject);
+    }
+
 }
