@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour {
     public bool tutorialDisableMove;
     public bool tutorialDisableShoot;
     public bool tutorialDisableChargeShot;
+    public bool tutorialDisableEvade;
+    bool tutorialEvadePressed;
 
     public Sprite shipSprite;
 
@@ -40,13 +42,13 @@ public class PlayerController : MonoBehaviour {
 
     Vector2 pushbackOffset;
 
-    float lastX; // Used for changing player sprite when moving horizontally
+    Vector2 mousePos, mousePosPrev;
 
     GameUIManager uiManager;
 
     float invulnTime;
 
-    bool inDeathState;
+    bool inDeathState, evading;
 
     public bool testBullet;
 
@@ -61,7 +63,9 @@ public class PlayerController : MonoBehaviour {
         // moveSprites = Resources.LoadAll<Sprite>("Sprites/tyrianship/ship");
         // GetComponent<SpriteRenderer>().sprite = moveSprites[2];
         GetComponent<SpriteRenderer>().sprite = shipSprite;
-        lastX = transform.position.x;
+
+        mousePos = Vector2.zero;
+        mousePosPrev = mousePos;
 
         // Audio source components added to player in the same order
         AudioSource[] sources = GetComponents<AudioSource>();
@@ -79,10 +83,12 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	void Update () {
-        Vector2 mousePos = Vector2.zero;
-
-        if (!tutorialDisableMove)
-            mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if (!evading) {
+            if (!tutorialDisableMove)
+                mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            else
+                mousePos = Vector2.zero;
+        }
 
         // Player movement boundaries (x values are the screen bounds, y values are arbitrary)
         mousePos = new Vector2(
@@ -152,6 +158,8 @@ public class PlayerController : MonoBehaviour {
         } else {
             chargeOutlineChild.GetComponent<SpriteRenderer>().enabled = false;
         }
+
+        mousePosPrev = mousePos;
     }
 
     void OnTriggerEnter2D(Collider2D collider) {
@@ -169,6 +177,30 @@ public class PlayerController : MonoBehaviour {
     public void AddMoney(int muns) {
         money += muns;
         uiManager.SetMoney(money);
+    }
+
+    public void LeftEvadeClicked() {
+        if (!tutorialDisableEvade && !evading) {
+            tutorialEvadePressed = true;
+            StartCoroutine(EvadeCoroutine(-2f, 1f));
+            invulnTime = 1f;
+        }
+        
+    }
+
+    public void RightEvadeClicked() {
+        if (!tutorialDisableEvade && !evading) {
+            tutorialEvadePressed = true;
+            StartCoroutine(EvadeCoroutine(2f, 1f));
+            invulnTime = 1f;
+        }
+    }
+
+    private IEnumerator EvadeCoroutine(float xDirection, float time) {
+        evading = true;
+        mousePos = new Vector2(mousePos.x + xDirection, mousePos.y);
+        yield return new WaitForSeconds(time);
+        evading = false;
     }
 
     private IEnumerator DeathCoroutine() {
@@ -309,7 +341,7 @@ public class PlayerController : MonoBehaviour {
 
         AudioClip flush = Resources.Load<AudioClip>("Sounds/flush");
         AudioSource audio = textBox.gameObject.transform.Find("Audio").GetComponent<AudioSource>();
-        audio.volume = 0.75f;
+        audio.volume = 0.5f;
         textBox.FadeIn();
         yield return new WaitForSeconds(1.5f);
 
@@ -347,16 +379,71 @@ public class PlayerController : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
         wait = textBox.TypeText("Diagnostics\r\nComplete.", 0.1f, false);
         yield return new WaitForSeconds(wait + 1f);
-        textBox.TypeText("Complete.", 0.0f, false);
-        yield return new WaitForSeconds(0.1f);
-        textBox.TypeText(" ", 0.0f, false);
-        yield return new WaitForSeconds(0.5f);
-        wait = textBox.TypeText("Ship is now\r\noperational.", 0.1f, false);
+        wait = textBox.TypeText("\r\nShip is now\r\noperational.", 0.1f, true);
         yield return new WaitForSeconds(wait + 1f);
+        textBox.TypeText("Complete.\r\nShip is now\r\noperational.", 0.0f, false);
+        yield return new WaitForSeconds(0.25f);
+        textBox.TypeText("Ship is now\r\noperational.", 0.0f, false);
+        yield return new WaitForSeconds(0.25f);
+        textBox.TypeText("operational.", 0.0f, false);
+        yield return new WaitForSeconds(0.25f);
+        textBox.TypeText(" ", 0.0f, false);
+        yield return new WaitForSeconds(1f);
 
-        textBox.FadeOut();
+        // MOVING
+        tutorialDisableMove = false;
+        wait = textBox.TypeText("Tap the screen to move!", 0.05f, false);
+        yield return new WaitForSeconds(wait);
+        while (mousePos == mousePosPrev) {
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+        // SHOOTING
+        tutorialDisableShoot = false;
+        yield return new WaitForSeconds(0.25f);
+        wait = textBox.TypeText("Your weapons will fire automatically.", 0.05f, false);
+        yield return new WaitForSeconds(wait + 2f);
+        wait = textBox.TypeText("Move around and try them out!", 0.05f, false);
+        yield return new WaitForSeconds(wait);
+        float moveAroundTime = 0f;
+        while (moveAroundTime < 1f) {
+            if (mousePos != mousePosPrev) {
+                moveAroundTime += Time.deltaTime;
+            }
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+        // ENEMY
+        yield return new WaitForSeconds(0.5f);
+        textBox.TypeText(" ", 0.0f, false);
+        GameObject enemy = Instantiate(Resources.Load<GameObject>("Prefabs/Enemies/Enemy"));
+        enemy.GetComponent<Enemy>().tutorialDisableFiring = true;
         yield return new WaitForSeconds(1.5f);
+        wait = textBox.TypeText("Looks like an enemy is on their own. Take them down!", 0.05f, false);
+        yield return new WaitForSeconds(wait + 0.5f);
+        while (enemy != null) {
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
 
+        // SCRAP
+        yield return new WaitForSeconds(0.5f);
+        wait = textBox.TypeText("Enemies will drop scrap for you to upgrade your ship.", 0.05f, false);
+        yield return new WaitForSeconds(wait + 2f);
+
+        //EVADE
+        wait = textBox.TypeText("Your evasive maneuvers are now online.", 0.05f, false);
+        yield return new WaitForSeconds(wait + 2f);
+        wait = textBox.TypeText("Tap the arrows below to evade enemy fire.", 0.05f, false);
+        yield return new WaitForSeconds(wait);
+        tutorialDisableEvade = false;
+        tutorialEvadePressed = false;
+        while (!tutorialEvadePressed) {
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+        // SWARM
+        textBox.TypeText(" ", 0.0f, false);
+        yield return new WaitForSeconds(1f);
 
     }
 }

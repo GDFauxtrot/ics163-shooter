@@ -136,7 +136,6 @@ public class UITextBoxManager : MonoBehaviour {
                 textToDisplay += text[i++]; // No delay for line break characters
             }
             textToDisplay += text[i++];
-            Debug.Log(textToDisplay);
             transform.Find("Text").GetComponent<Text>().text = textToDisplay;
             if (speed != 0f)
                 yield return new WaitForSeconds(speed);

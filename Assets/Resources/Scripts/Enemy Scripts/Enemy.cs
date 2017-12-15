@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour {
     public int health;
     public EnemyType enemytype; // Select enum from above in designer
 
+    public bool tutorialDisableFiring;
+
     // Animations
     Animator animator;
 
@@ -30,11 +32,13 @@ public class Enemy : MonoBehaviour {
     private IEnumerator EnemyFireCoroutine() {
         yield return new WaitForSeconds(Random.Range(1f, 5f));
         while(true) {
-            GameObject bullet = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/EnemyBullet"));
-            bullet.transform.localPosition = new Vector3(transform.position.x, transform.position.y - 0.25f, transform.position.z);
-            bullet.GetComponent<Rigidbody2D>().velocity = Vector2.ClampMagnitude(GameObject.Find("Player").transform.position - bullet.transform.position, 7);
-            // Add a bit of randomness
-            bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(bullet.GetComponent<Rigidbody2D>().velocity.x + Random.Range(-0.5f, 0.5f), bullet.GetComponent<Rigidbody2D>().velocity.y + Random.Range(-0.5f, 0.5f));
+            if (!tutorialDisableFiring) {
+                GameObject bullet = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/EnemyBullet"));
+                bullet.transform.localPosition = new Vector3(transform.position.x, transform.position.y - 0.25f, transform.position.z);
+                bullet.GetComponent<Rigidbody2D>().velocity = Vector2.ClampMagnitude(GameObject.Find("Player").transform.position - bullet.transform.position, 7);
+                // Add a bit of randomness
+                bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(bullet.GetComponent<Rigidbody2D>().velocity.x + Random.Range(-0.5f, 0.5f), bullet.GetComponent<Rigidbody2D>().velocity.y + Random.Range(-0.5f, 0.5f));
+            }
             yield return new WaitForSeconds(Random.Range(4f, 8f));
         }
     }
