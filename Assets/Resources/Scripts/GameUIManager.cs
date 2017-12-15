@@ -11,7 +11,6 @@ public class GameUIManager : MonoBehaviour {
 
     int health;
     Sprite hpSprite, hpHalfSprite;
-    int startX = 255, startY = -64, size = 95;
 
     void Start () {
         healthObjects = new List<GameObject>();
@@ -43,10 +42,13 @@ public class GameUIManager : MonoBehaviour {
         bool half = (health % 2 == 1);
 
         for (int i = 0; i < health / 2 + (half ? 1 : 0); ++i) {
-            GameObject healthObject = Instantiate(Resources.Load<GameObject>("Prefabs/UIHealthItem"));
+            GameObject healthObject = Instantiate(Resources.Load<GameObject>("Prefabs/UIHealthItem")) as GameObject;
             healthObject.transform.SetParent(transform);
+            healthObject.transform.localScale = new Vector3(2.5f, 2.5f, 1.0f);
             healthObject.transform.SetSiblingIndex(healthObject.transform.GetSiblingIndex() - 1);
-            healthObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(startX + i * size, startY);
+            healthObject.GetComponent<RectTransform>().sizeDelta = new Vector2(-32, -32);
+            healthObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(64 * i, 0);
+            //healthObject.transform.position = Vector3.zero;
             healthObjects.Add(healthObject);
         }
         if (half) {

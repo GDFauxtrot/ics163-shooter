@@ -194,8 +194,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 8015631}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 720, y: 1280, z: 0}
-  m_LocalScale: {x: 1.3333334, y: 1.3333334, z: 1.3333334}
+  m_LocalPosition: {x: 174.5, y: 310, z: 0}
+  m_LocalScale: {x: 0.32314816, y: 0.32314816, z: 0.32314816}
   m_Children:
   - {fileID: 1629237127}
   - {fileID: 270765428}
@@ -503,7 +503,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 270765427}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.15997314, y: -869.02, z: 0}
+  m_LocalPosition: {x: -0.15997314, y: -868.39746, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1887783462}
@@ -1243,7 +1243,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ye i dunno delete me
+  m_Text: --
 --- !u!222 &515928614
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2411,7 +2411,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1629237126}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 81.599976, z: 0}
+  m_LocalPosition: {x: 0, y: 81.541504, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 779884850}

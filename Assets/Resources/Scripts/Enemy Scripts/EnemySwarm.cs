@@ -28,6 +28,7 @@ public class EnemySwarm : MonoBehaviour {
     public bool is_filling = true;
     public bool is_attacking = false;
 
+    public bool areWavesOver;
 
     // Use this for initialization
     void Start () {
@@ -52,7 +53,7 @@ public class EnemySwarm : MonoBehaviour {
                 num_waves_remaining--;
             } else
             {
-                // Level End
+                areWavesOver = true;
             }
         }
 

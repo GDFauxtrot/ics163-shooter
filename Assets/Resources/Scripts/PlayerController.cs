@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 
@@ -444,6 +446,57 @@ public class PlayerController : MonoBehaviour {
         // SWARM
         textBox.TypeText(" ", 0.0f, false);
         yield return new WaitForSeconds(1f);
+        wait = textBox.TypeText("MULTIPLE ENEMIES DETECTED NEARBY.", 0.1f, false);
+        yield return new WaitForSeconds(wait + 1f);
+        wait = textBox.TypeText("\r\nGET READY.", 0.2f, true);
+        yield return new WaitForSeconds(wait + 3f);
 
+        GameObject swarmParent = Instantiate(Resources.Load<GameObject>("Prefabs/Swarm"));
+
+        textBox.TypeText(" ", 0.0f, false);
+        yield return new WaitForSeconds(0.1f);
+        textBox.FadeOut();
+
+        while (!swarmParent.GetComponent<EnemySwarm>().areWavesOver) {
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+        textBox.FadeIn();
+        yield return new WaitForSeconds(2.5f);
+
+        wait = textBox.TypeText("Very good! ", 0.05f, false);
+        yield return new WaitForSeconds(wait + 0.5f);
+        wait = textBox.TypeText("Now, get back to base before you run out of fuel.", 0.05f, true);
+        yield return new WaitForSeconds(wait + 1f);
+        textBox.FadeOut();
+        yield return new WaitForSeconds(2f);
+
+        GameObject.Find("ScreenFader").GetComponent<ScreenFaderManager>().FadeTo(Color.black, 2);
+        yield return new WaitForSeconds(2.5f);
+        GameObject endText = new GameObject("EndText");
+        endText.AddComponent<Text>();
+        endText.transform.parent = GameObject.Find("Canvas").transform;
+        endText.GetComponent<Text>().font = Resources.Load<Font>("Fonts/PressStart2P");
+        endText.GetComponent<Text>().fontSize = 72;
+        endText.GetComponent<Text>().text = "Thank you for\r\nplaying our game!\r\n\r\nMore to come soon!";
+        endText.GetComponent<Text>().alignment = TextAnchor.MiddleCenter;
+        endText.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+        endText.GetComponent<RectTransform>().offsetMin = new Vector2(-1000, -1000);
+        endText.GetComponent<RectTransform>().offsetMax = new Vector2(1000, 1000);
+
+        endText.GetComponent<Text>().color = new Color(1f, 1f, 1f, 0f);
+        float textAlpha = 0f;
+        while (textAlpha < 1f) {
+            textAlpha += 0.02f;
+            endText.GetComponent<Text>().color = new Color(1f, 1f, 1f, textAlpha);
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+        yield return new WaitForSeconds(3f);
+        while (textAlpha > 0f) {
+            textAlpha -= 0.02f;
+            endText.GetComponent<Text>().color = new Color(1f, 1f, 1f, textAlpha);
+        }
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene("GalaxyViewMenu");
     }
 }
