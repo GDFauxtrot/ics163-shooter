@@ -202,6 +202,7 @@ public class PlayerController : MonoBehaviour {
         evading = true;
         mousePos = new Vector2(mousePos.x + xDirection, mousePos.y);
         yield return new WaitForSeconds(time);
+        mousePos = new Vector2(mousePos.x + xDirection, mousePos.y);
         evading = false;
     }
 
@@ -481,8 +482,8 @@ public class PlayerController : MonoBehaviour {
         endText.GetComponent<Text>().text = "Thank you for\r\nplaying our game!\r\n\r\nMore to come soon!";
         endText.GetComponent<Text>().alignment = TextAnchor.MiddleCenter;
         endText.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-        endText.GetComponent<RectTransform>().offsetMin = new Vector2(-1000, -1000);
-        endText.GetComponent<RectTransform>().offsetMax = new Vector2(1000, 1000);
+        endText.GetComponent<RectTransform>().offsetMin = new Vector2(-500, -500);
+        endText.GetComponent<RectTransform>().offsetMax = new Vector2(500, 500);
 
         endText.GetComponent<Text>().color = new Color(1f, 1f, 1f, 0f);
         float textAlpha = 0f;
