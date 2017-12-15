@@ -608,7 +608,7 @@ PlayerSettings:
     Collab: 1
     UNet: 1
   facebookSdkVersion: 7.9.4
-  apiCompatibilityLevel: 2
+  apiCompatibilityLevel: 3
   cloudProjectId: 5bf1f6d3-896f-4a34-a417-29646df2c20e
   projectName: Project Asteri
   organizationId: fauxtrot

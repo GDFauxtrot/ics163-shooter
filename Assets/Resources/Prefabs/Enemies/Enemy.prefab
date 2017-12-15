@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5835f63f0eb598447b9cd2701c9074a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 4
+  health: 5
   enemytype: 0
 --- !u!212 &212137998010294568
 SpriteRenderer:

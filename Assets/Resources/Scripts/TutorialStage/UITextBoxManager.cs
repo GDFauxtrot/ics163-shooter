@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIFadeWhenPlayerBehind : MonoBehaviour {
+public class UITextBoxManager : MonoBehaviour {
 
     public GameObject player;
     public float alphaFadeTo;
@@ -103,7 +103,7 @@ public class UIFadeWhenPlayerBehind : MonoBehaviour {
     public void FadeIn() {
         desiredAlpha = DoVec4BoundsOverlap(currentBoundsPosition, bounds) ? alphaFadeTo : 1.0f;
         previousAlpha = 0.0f;
-        currentFadeTime = 2.0f;
+        currentFadeTime = 1.0f;
         step = 0;
         active = true;
         fadeRunning = true;
@@ -112,9 +112,35 @@ public class UIFadeWhenPlayerBehind : MonoBehaviour {
     public void FadeOut() {
         previousAlpha = DoVec4BoundsOverlap(currentBoundsPosition, bounds) ? alphaFadeTo : 1.0f;
         desiredAlpha = 0.0f;
-        currentFadeTime = 2.0f;
+        currentFadeTime = 1.0f;
         step = 0;
         active = true;
         fadeRunning = true;
+    }
+
+    public float TypeText(string text, float charSpeedSecs, bool append) {
+        StartCoroutine(TextCoroutine(text, charSpeedSecs, append));
+        return (text.Length+1) * charSpeedSecs;
+    }
+
+    private IEnumerator TextCoroutine(string text, float speed, bool append) {
+        string textToDisplay = "";
+
+        if (append) {
+            textToDisplay = transform.Find("Text").GetComponent<Text>().text;
+        }
+        
+        int i = 0;
+        while (i < text.Length) {
+            while (text[i] == '\r' || text[i] == '\n') {
+                textToDisplay += text[i++]; // No delay for line break characters
+            }
+            textToDisplay += text[i++];
+            Debug.Log(textToDisplay);
+            transform.Find("Text").GetComponent<Text>().text = textToDisplay;
+            if (speed != 0f)
+                yield return new WaitForSeconds(speed);
+        }
+        yield return new WaitForSeconds(0f);
     }
 }

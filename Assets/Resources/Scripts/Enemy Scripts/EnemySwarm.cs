@@ -14,17 +14,19 @@ public class EnemySwarm : MonoBehaviour {
     public GameObject enemy_prefab;
     public float minX;
     public float maxX;
+    public int num_waves_remaining = 5;
 
     // Sets direction of movement (left if true, right if false)
     // TODO: Sync these across all spawned enemies
     public bool move_left = true;
     public float speed = 5f;
-    public float spawn_delay = 0.2f;
+    public float spawn_delay = 0.05f;
+    public float step = 0f; // How much level lowers each time
 
 
     // Bools for checking if attack can be called
-    private bool is_filling = true;
-    private bool is_attacking = false;
+    public bool is_filling = true;
+    public bool is_attacking = false;
 
 
     // Use this for initialization
@@ -35,16 +37,25 @@ public class EnemySwarm : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (!is_attacking)
+        if (!is_attacking && !is_filling)
         {
             MoveFormationSideToSide();
         }
         if (AllMembersDead())
         {
-            SpawnUntilFull();
+            if (num_waves_remaining > 0)
+            {
+                this.transform.position = new Vector3(this.transform.position.x,
+                                                      this.transform.position.y - step,
+                                                      this.transform.position.z);
+                SpawnUntilFull();
+                num_waves_remaining--;
+            } else
+            {
+                // Level End
+            }
         }
 
-        Debug.Log("fill: " + is_filling + "; attack: " + is_attacking);
 
         if ((Random.Range(1f, 1000000f) > 999000) && CanAttack()) // Arbitrary for the time being
         {
@@ -109,6 +120,10 @@ public class EnemySwarm : MonoBehaviour {
         if (newX >= maxX)
         {
             move_left = true;
+        } else 
+        if (Random.value > 0.99f)
+        {
+            move_left = !move_left;
         }
     }
 
@@ -121,6 +136,7 @@ public class EnemySwarm : MonoBehaviour {
                 return false;
             }
         }
+        is_attacking = false;
         return true;
     }
 
@@ -138,6 +154,7 @@ public class EnemySwarm : MonoBehaviour {
 
     void SpawnUntilFull()
     {
+        is_filling = true;
         Transform free_position = NextFreePosition();
         if (free_position)
         {
@@ -150,7 +167,7 @@ public class EnemySwarm : MonoBehaviour {
         {
             Invoke("SpawnUntilFull", spawn_delay);
         }
-        Invoke("_resetis_fillingOnDelay", 10);
+        Invoke("_resetis_fillingOnDelay", 2);
     }
 
     void AttackSwarm(int pattern)
@@ -163,8 +180,7 @@ public class EnemySwarm : MonoBehaviour {
                 GameObject enemy = enemy_position.GetChild(0).gameObject;
                 Enemy enemy_script = enemy.GetComponent<Enemy>();
                 enemy_script.Attack(pattern, offset_incrementer);
-                offset_incrementer += 0.5f;
-                Debug.Log("offset = " + offset_incrementer);
+                offset_incrementer += 0.3f;
             }
         }
     }

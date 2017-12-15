@@ -52,8 +52,8 @@ public class Enemy : MonoBehaviour {
             {
                 Destroy(gameObject);
 
-                GameObject.Find("Canvas").GetComponent<GameUIManager>().AddScoreAndUpdate(100);
                 GameObject.Find("Canvas").GetComponent<GameUIManager>().AddHitsAndUpdate(1);
+                GameObject.Find("Player").GetComponent<PlayerController>().AddMoney(100);
             }
             else
             {

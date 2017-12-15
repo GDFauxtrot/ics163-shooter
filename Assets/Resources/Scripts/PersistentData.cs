@@ -54,7 +54,7 @@ public class PersistentData : MonoBehaviour {
     void SetMedClassValues() {
         playerClassType = ShipType.MED;
 
-        playerHealth = 3;
+        playerHealth = 6;
         playerDamage = 2;
         playerChargeTime = 2;
     }

@@ -22,6 +22,7 @@ public class WaveController : MonoBehaviour {
     public float right_minX = 0;
     public Vector3 left_center = new Vector3(-2, 6, 0); // initially set to left swarm starting location
     public Vector3 right_center = new Vector3(2, 6, 0); // initically set to right swarm starting location
+    public Vector3 temp_center;
 
     public GameObject left_swarm;
     public GameObject right_swarm;
@@ -35,13 +36,14 @@ public class WaveController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         num_swarms_remaing = max_swarms;
-        Debug.Log(left_center);
+        LeftInstantiate();
+        RightInstantiate();
 	}
 	
 	// Update is called once per frame
 	void Update () {
         Checks();
-
+        // Function for creating attacks
 	}
 
     void Checks()
@@ -56,18 +58,20 @@ public class WaveController : MonoBehaviour {
             CANMOVE = true;
         }
 
-        if ((left_swarm == null) && (num_swarms_remaing > 0))
+        // max_swarms - 2 to eliminate setting temp_center on first instantiation for wave
+        if ((left_swarm == null) && (num_swarms_remaing > 0) && (num_swarms_remaing < max_swarms -2))
         {
+            left_center = temp_center;
             LeftInstantiate();
         } else 
         if ((right_swarm == null) && (num_swarms_remaing > 0))
         {
+            right_center = temp_center;
             RightInstantiate();
         } else
         if ((right_swarm == null) && (left_swarm == null) && num_swarms_remaing == 0)
         {
-            // Call cleanup function here (all swarms destroyed)
-            // 
+            // Call cleanup function here (all swarms destroyed) 
         }
     }
 
@@ -81,6 +85,7 @@ public class WaveController : MonoBehaviour {
         ISFILLING = true;
         left_swarm = Instantiate(swarm_array[max_swarms - num_swarms_remaing], left_center,
                                     Quaternion.identity) as GameObject;
+        num_swarms_remaing--;
     }
 
     public void RightInstantiate()
@@ -88,5 +93,23 @@ public class WaveController : MonoBehaviour {
         ISFILLING = true;
         left_swarm = Instantiate(swarm_array[max_swarms - num_swarms_remaing], right_center,
                                     Quaternion.identity) as GameObject;
+        num_swarms_remaing--;
+    }
+
+    public void SetNewCenter(Vector3 center)
+    {
+        temp_center.x = center.x;
+        temp_center.y = center.y;
+        temp_center.z = center.z;
+    }
+
+    public void FillingComplete()
+    {
+        ISFILLING = false;
+    }
+
+    public void AttackComplete()
+    {
+        ISATTACKING = false;
     }
 }
